@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { firestore } from '../utils/firebase'; // Importe o objeto firestore do seu arquivo firebase.js
+import { collection, query, getDocs, where } from 'firebase/firestore';
+
+import { firestore } from '../utils/firebase'
 
 const SearchBooks = () => {
   const [author, setAuthor] = useState('');
@@ -7,24 +9,19 @@ const SearchBooks = () => {
   const [pageCount, setPageCount] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearch = async () => {
+  const handleSearch = async (e) => {
+    e.preventDefault();
     try {
-      const booksRef = firestore.collection('livros');
-      let query = booksRef;
+      const booksRef = collection(firestore, 'Livros');
+      let q = query(booksRef); // Inicia a consulta base
 
-      // Construa a consulta com base nos filtros selecionados
+      // Adiciona filtros Ã  consulta com base nos valores selecionados
       if (author !== '') {
-        query = query.where('autor', '==', author);
-      }
-      if (genre !== '') {
-        query = query.where('genero', '==', genre);
-      }
-      if (pageCount !== '') {
-        query = query.where('qtdPaginas', '==', parseInt(pageCount));
+        q = query(q, where('autor', '==', author));
       }
 
-      // Execute a consulta
-      const snapshot = await query.get();
+
+      const snapshot = await getDocs(q); // Executa a consulta
 
       // Limpe os resultados anteriores
       setSearchResults([]);
@@ -34,6 +31,7 @@ const SearchBooks = () => {
       snapshot.forEach(doc => {
         results.push({ id: doc.id, ...doc.data() });
       });
+      console.log(results);
       setSearchResults(results);
     } catch (error) {
       console.error('Erro ao buscar livros:', error);
@@ -41,42 +39,59 @@ const SearchBooks = () => {
   };
 
   return (
-    <div>
+    <div className='container'>
       <h2>Pesquisar Livros</h2>
-      <label>Autor:</label>
-      <select value={author} onChange={e => setAuthor(e.target.value)}>
-        <option value="">Selecione um autor</option>
-        <option value="Suzanne Collins">Suzanne Collins</option>
-        <option value="George Orwell">George Orwell</option>
-      </select>
-      <label>Gênero:</label>
-      <select value={genre} onChange={e => setGenre(e.target.value)}>
-        <option value="">Selecione um gênero</option>
-        <option value="Ficção">Ficção</option>
-        <option value="distopia">distopia</option>
-      </select>
-      <label>Quantidade de Páginas:</label>
-      <select value={pageCount} onChange={e => setPageCount(e.target.value)}>
-        <option value="">Selecione a quantidade de páginas</option>
-        <option value="326">326</option>
-        <option value="400">400</option>
-      </select>
-      <button onClick={handleSearch}>Pesquisar</button>
+
+      <form className='row row-cols-lg-auto g-3 align-items-center justify-content-center' >
+        <div className="col-12">
+          <label>Autor:</label>
+          <select value={author} onChange={e => setAuthor(e.target.value)} className="form-select col-lg-4">
+            <option value="">Selecione um autor</option>
+            <option value="Suzanne Collins">Suzanne Collins</option>
+            <option value="George Orwell">George Orwell</option>
+          </select>
+        </div>
+        <div className="col-12">
+          <label>Gênero:</label>
+          <select value={genre} onChange={e => setGenre(e.target.value)} className="form-select">
+            <option value="">Selecione um gênero</option>
+            <option value="Ficcao">Ficção</option>
+            <option value="distopia">distopia</option>
+          </select>
+        </div>
+        <div className="col-12">
+          <label>Quantidade de Páginas:</label>
+          <select value={pageCount} onChange={e => setPageCount(e.target.value)} className="form-select">
+            <option value="">Selecione a quantidade de páginas</option>
+            <option value="326">326</option>
+            <option value="400">400</option>
+          </select>
+        </div>
+        <div className="col-12" >
+          <button className="btn btn-primary" style={{ marginTop: 17 }} onClick={handleSearch}>Pesquisar</button>
+        </div>
+
+
+      </form>
+
 
       {/* Exibir resultados */}
-      <div>
+      <div className='container mt-6' style={{ 'marginTop': 25 }}>
         {searchResults.length > 0 ? (
           <div>
-            <h3>Resultados da Pesquisa:</h3>
+            <h3 className='mt-5' >Resultados da Pesquisa:</h3>
+
             <ul>
               {searchResults.map(book => (
-                <li key={book.id}>
-                  <strong>Título:</strong> {book.nomeLivro}<br />
-                  <strong>Autor:</strong> {book.autor}<br />
-                  <strong>Gênero:</strong> {book.genero}<br />
-                  <strong>Descrição:</strong> {book.descricao}<br />
-                  <strong>Quantidade de Páginas:</strong> {book.qtdPaginas}
-                </li>
+                <div className='col-lg-12 border rounded mt-5'>
+                  <li key={book.id} style={{ listStyle: 'none' }}>
+                    <strong>Título:</strong> {book.nomeLivros}<br />
+                    <strong>Autor:</strong> {book.autor}<br />
+                    <strong>Gênero:</strong> {book.genero}<br />
+                    <strong>Descrição:</strong> {book.descricao}<br />
+                    <strong>Quantidade de Páginas:</strong> {book.qtdPaginas}
+                  </li>
+                </div>
               ))}
             </ul>
           </div>
