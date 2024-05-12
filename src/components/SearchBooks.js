@@ -6,7 +6,7 @@ import { firestore } from '../utils/firebase'
 const SearchBooks = () => {
   const [author, setAuthor] = useState('');
   const [genre, setGenre] = useState('');
-  const [pageCount, setPageCount] = useState('');
+  const [bookName, setBookName] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearch = async (e) => {
@@ -18,6 +18,14 @@ const SearchBooks = () => {
       // Adiciona filtros Ã  consulta com base nos valores selecionados
       if (author !== '') {
         q = query(q, where('autor', '==', author));
+      }
+
+      if (genre !== '') {
+        q = query(q, where('genero', '==', genre));
+      }
+
+      if (bookName !== '') {
+        q = query(q, where('nomeLivros', '==', bookName));
       }
 
 
@@ -55,16 +63,18 @@ const SearchBooks = () => {
           <label>Gênero:</label>
           <select value={genre} onChange={e => setGenre(e.target.value)} className="form-select">
             <option value="">Selecione um gênero</option>
-            <option value="Ficcao">Ficção</option>
-            <option value="distopia">distopia</option>
+            <option value="Ficção">Ficção</option>
+            <option value="distopia">Distopia</option>
+            <option value="romance">Romance</option>
           </select>
         </div>
         <div className="col-12">
-          <label>Quantidade de Páginas:</label>
-          <select value={pageCount} onChange={e => setPageCount(e.target.value)} className="form-select">
-            <option value="">Selecione a quantidade de páginas</option>
-            <option value="326">326</option>
-            <option value="400">400</option>
+          <label>Livros:</label>
+          <select value={bookName} onChange={e => setBookName(e.target.value)} className="form-select">
+            <option value="">Selecione o livro desejado</option>
+            <option value="Jogos Vorazes">Jogos Vorazes</option>
+            <option value="Gregor The Overlander">Gregor The Overlander</option>
+            <option value="1984">1984</option>
           </select>
         </div>
         <div className="col-12" >

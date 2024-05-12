@@ -1,13 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
-import SearchBooks from './components/SearchBooks'; // Importe o componente SearchBooks
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import SearchBooks from './components/SearchBooks';
+import Home from './components/Home';
+import Login from './components/Login';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-   <SearchBooks />
-    </div>
+    <Router>
+      <div>
+        <Header/>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/pesquisar" element={<SearchBooks />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
