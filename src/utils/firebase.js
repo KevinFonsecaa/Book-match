@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 
-import { getFirestore } from 'firebase/firestore'; // Importe a função getFirestore para acessar o Firestore
+import { getFirestore } from 'firebase/firestore'; // Importe a funÃ§Ã£o getFirestore para acessar o Firestore
+import { getAuth } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -20,7 +21,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 
-// Obtenha uma instância do Firestore
+// Obtenha uma instÃ¢ncia do Firestore
 const firestore = getFirestore(app);
+const auth = getAuth(app);
 
-export { firestore }; // Exporte o objeto firestore para que ele possa ser importado em outros arquivos
+export { firestore,auth }; // Exporte o objeto firestore para que ele possa ser importado em outros arquivos
