@@ -50,42 +50,39 @@ const Cadastro = () => {
     <div className='container'>
 
 
-      <form className='row row-cols-lg-auto g-3 align-items-center justify-content-center' >
-        <div className="mb-3">
-          <label for="exampleFormControlInput1" className="form-label">Nome do livro</label>
-          <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="EX: O hobbit" />
-        </div>
+<form className='row g-3 justify-content-center mt-3' >
+    <div className="col-12 col-md-6">
+        <label htmlFor="bookName" className="form-label">Nome do livro</label>
+        <input type="text" className="form-control" id="bookName" placeholder="EX: O hobbit" />
+    </div>
 
-        <br/>
+    <div className="col-12 col-md-6">
+        <label htmlFor="authorName" className="form-label">Nome do autor</label>
+        <input type="text" className="form-control" id="authorName" placeholder="EX: Tolkien" />
+    </div>
 
-        <div className="mb-3">
-          <label for="exampleFormControlInput1" className="form-label">Nome do autor</label>
-          <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="EX: Tokkien" />
-        </div>
+    <div className="col-12 col-md-6">
+        <label htmlFor="bookGenre" className="form-label">Gênero</label>
+        <input type="text" className="form-control" id="bookGenre" placeholder="EX: Fantasia" />
+    </div>
 
-        <br/>
+    <div className="col-12 col-md-6">
+        <label htmlFor="pageNumber" className="form-label">Número de páginas</label>
+        <input type="number" className="form-control" id="pageNumber" placeholder="Ex: 150" />
+    </div>
 
-        <div className="mb-3">
-          <label for="exampleFormControlInput1" className="form-label">Gênero</label>
-          <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="EX: Fantasia" />
-        </div>
+    <div className="col-12">
+        <label htmlFor="synopsis" className="form-label">Sinopse</label>
+        <textarea className="form-control" id="synopsis" rows="3" placeholder="Ex: Em uma terra fantástica e única, um hobbit..."></textarea>
+    </div>
 
-        <br/>
-
-        <div className="mb-3">
-          <label for="exampleFormControlInput1" className="form-label">número de páginas</label>
-          <input type="number" className="form-control" id="exampleFormControlInput1" placeholder="Ex: 150" />
-        </div>
-
-        <br/>
-
-        <div class="mb-3">
-          <label for="exampleFormControlTextarea1" class="form-label">Sinopse</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Ex: Em uma terra fantástica e única, um hobbit..."></textarea>
-        </div>
+    <div>
+    <button className="btn btn-primary col-2" style={{ marginTop: 17 }} >Cadastrar</button>
+    </div>
+    
+</form>
 
 
-      </form>
 
 
 
