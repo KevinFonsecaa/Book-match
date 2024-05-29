@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { collection, query, getDocs, where, doc, deleteDoc } from 'firebase/firestore';
@@ -15,6 +15,44 @@ const SearchBooks = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
   const { user } = useContext(AuthContext);
+
+  const [authors, setAuthors] = useState([]);
+  const [genres, setGenres] = useState([]);
+  const [nomeLivros,setNomeLivros] = useState([]);
+  
+  useEffect(() => {
+    const fetchDadosFiltros = async () => {
+      try {
+        const booksRef = collection(firestore, 'Livros');
+        const snapshot = await getDocs(booksRef);
+        const authorsSet = new Set();
+        const genresSet = new Set();
+        const nomeLivrosSet = new Set();
+
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          if (data.autor) {
+            authorsSet.add(data.autor);
+          }
+          if (data.genero) {
+            genresSet.add(data.genero);
+          }
+          if (data.nomeLivros) {
+            nomeLivrosSet.add(data.nomeLivros);
+          }
+        });
+
+        setAuthors(Array.from(authorsSet));
+        setGenres(Array.from(genresSet));
+        setNomeLivros(Array.from(nomeLivrosSet));
+      } catch (error) {
+        console.error('Erro ao buscar autores e gêneros:', error);
+      }
+    };
+
+    fetchDadosFiltros();
+  }, []);
+
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -75,27 +113,27 @@ const SearchBooks = () => {
           <label>Autor:</label>
           <select value={author} onChange={e => setAuthor(e.target.value)} className="form-select col-lg-4">
             <option value="">Selecione um autor</option>
-            <option value="Suzanne Collins">Suzanne Collins</option>
-            <option value="George Orwell">George Orwell</option>
+            {authors.map((author) => (
+              <option key={author} value={author}>{author}</option>
+            ))}
           </select>
         </div>
         <div className="col-12">
           <label>Gênero:</label>
           <select value={genre} onChange={e => setGenre(e.target.value)} className="form-select">
             <option value="">Selecione um Gênero</option>
-            <option value="Ficção">Ficção</option>
-            <option value="Distopia">Distopia</option>
-            <option value="Romance">Romance</option>
+            {genres.map((genre) => (
+              <option key={genre} value={genre}>{genre}</option>
+            ))}
           </select>
         </div>
         <div className="col-12">
           <label>Livros:</label>
           <select value={bookName} onChange={e => setBookName(e.target.value)} className="form-select">
-            <option value="">Selecione o livro desejado</option>
-            <option value="Jogos Vorazes">Jogos Vorazes</option>
-            <option value="Gregor The Overlander">Gregor The Overlander</option>
-            <option value="1984">1984</option>
-            <option value="Clube da luta">Clube da luta</option>
+          <option value="">Selecione o livro desejado</option>
+            {nomeLivros.map((book) => (
+              <option key={book} value={book}>{book}</option>
+            ))}
           </select>
         </div>
         <div className="col-12">
@@ -119,7 +157,7 @@ const SearchBooks = () => {
                       <p className='card-text'>Autor: {book.autor}</p>
                       <p className='card-text'>Gênero: {book.genero}</p>
                       <p className='card-text'>Descrição: {book.descricao}</p>
-                      <p className='card-text'>Qtd de páginas: {book.qtdPaginas}</p>
+                      <p className='card-text'>Qtd de página: {book.qtdPaginas}</p>
                      <a href={`${book.pdfUrl}`} target='blank' download>Baixar</a> 
                       <div className='d-flex gap-2'>
                         {user && (
@@ -175,3 +213,4 @@ const SearchBooks = () => {
 };
 
 export default SearchBooks;
+
