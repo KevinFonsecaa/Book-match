@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import { MdDelete, MdEdit } from "react-icons/md";
+import { FaAmazon } from "react-icons/fa";
 import { collection, query, getDocs, where, doc, deleteDoc } from 'firebase/firestore';
 import { AuthContext } from '../utils/auth';
 import { firestore } from '../utils/firebase';
@@ -18,8 +19,8 @@ const SearchBooks = () => {
 
   const [authors, setAuthors] = useState([]);
   const [genres, setGenres] = useState([]);
-  const [nomeLivros,setNomeLivros] = useState([]);
-  
+  const [nomeLivros, setNomeLivros] = useState([]);
+
   useEffect(() => {
     const fetchDadosFiltros = async () => {
       try {
@@ -46,7 +47,7 @@ const SearchBooks = () => {
         setGenres(Array.from(genresSet));
         setNomeLivros(Array.from(nomeLivrosSet));
       } catch (error) {
-        console.error('Erro ao buscar autores e gêneros:', error);
+        console.error('Erro ao buscar os dados', error);
       }
     };
 
@@ -130,7 +131,7 @@ const SearchBooks = () => {
         <div className="col-12">
           <label>Livros:</label>
           <select value={bookName} onChange={e => setBookName(e.target.value)} className="form-select">
-          <option value="">Selecione o livro desejado</option>
+            <option value="">Selecione o livro desejado</option>
             {nomeLivros.map((book) => (
               <option key={book} value={book}>{book}</option>
             ))}
@@ -158,7 +159,13 @@ const SearchBooks = () => {
                       <p className='card-text'>Gênero: {book.genero}</p>
                       <p className='card-text'>Descrição: {book.descricao}</p>
                       <p className='card-text'>Qtd de página: {book.qtdPaginas}</p>
-                     <a href={`${book.pdfUrl}`} target='blank' download>Baixar</a> 
+                      <div className='mb-3'>
+                        <a href={`${book.pdfUrl}`} target='blank' download>Baixar</a>
+                        <a href={`${book.link}`} className='text-decoration-none text-white' target='blank'><button type="button" className="btn btn-dark mx-3">
+                          <FaAmazon size={20} />Comprar
+                        </button>
+                        </a>
+                      </div>
                       <div className='d-flex gap-2'>
                         {user && (
                           <>
@@ -192,7 +199,7 @@ const SearchBooks = () => {
                 <p>Tem certeza de que deseja excluir o livro "{selectedBook.nomeLivros}"?</p>
               )}
               {deleteSuccess && (
-                <p>Livro excluído com sucesso!</p>
+                <p>Livro exclui­do com sucesso!</p>
               )}
             </div>
             <div className="modal-footer">

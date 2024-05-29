@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL, getStorage } from 'firebase/storage';
 import { firestore } from '../utils/firebase';
-import '../index.css';  // Importe o arquivo CSS onde as animações estão definidas
+import '../index.css';  // Importe o arquivo CSS onde as animaÃ§Ãµes estÃ£o definidas
 
 const Editar = () => {
     const [author, setAuthor] = useState('');
@@ -11,6 +11,7 @@ const Editar = () => {
     const [bookName, setBookName] = useState('');
     const [pageCount, setPageCount] = useState('');
     const [synopsis, setSynopsis] = useState('');
+    const [booklink, setBookLink] = useState('');
     const [image, setImage] = useState(null);
     const [pdf, setPdf] = useState(null);
     const [error, setError] = useState('');
@@ -35,6 +36,7 @@ const Editar = () => {
                     setPageCount(bookData.qtdPaginas);
                     setSynopsis(bookData.descricao);
                     setImage(bookData.imageUrl);
+                    setBookLink(bookData.link);
                 } else {
                     setError('Livro não encontrado.');
                 }
@@ -71,6 +73,7 @@ const Editar = () => {
             nomeLivros: bookName,
             qtdPaginas: pageCount,
             descricao: synopsis,
+            link:booklink
         };
         const storage = getStorage();
         try {
@@ -186,7 +189,7 @@ const Editar = () => {
                                 className="form-control"
                                 id="synopsis"
                                 rows="3"
-                                placeholder="Ex: Em uma terra fantástica e única, um hobbit..."
+                                placeholder="Ex: Em uma terra fantÃ¡stica e Ãºnica, um hobbit..."
                                 value={synopsis}
                                 onChange={(e) => setSynopsis(e.target.value)}
                             ></textarea>
@@ -210,6 +213,10 @@ const Editar = () => {
                                 accept="application/pdf"
                                 onChange={(e) => setPdf(e.target.files[0])}
                             />
+                        </div>
+                        <div className="col-12">
+                            <label htmlFor="book-link" className="form-label">Compre aqui</label>
+                            <input type="link" className="form-control" id="book-link" value={booklink} onChange={(e) => setBookLink(e.target.value)} />
                         </div>
                         {error && (
                             <div className="col-12">
