@@ -1,0 +1,30 @@
+.login-container {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.passaro-img-left {
+    position: absolute;
+    top: 20%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 420px;
+}
+
+.passaro-img-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 420px;
+}
+
+.form-signin {
+    z-index: 2; /* Certifique-se de que o formulário está acima das imagens */
+}
+
+.logo-img {
+    height: 118px;
+    width: 132px;
+}

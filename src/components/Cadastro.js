@@ -130,7 +130,7 @@ const Cadastro = () => {
             </div>
             <div className="col-12">
               <label htmlFor="synopsis" className="form-label">Sinopse</label>
-              <textarea className="form-control" id="synopsis" rows="3" placeholder="Ex: Em uma terra fantÃ¡stica e Ãºnica, um hobbit..." value={synopsis} onChange={(e) => setSynopsis(e.target.value)}></textarea>
+              <textarea className="form-control" id="synopsis" rows="3" placeholder="Ex: Em uma terra fantastica e antiga, um hobbit..." value={synopsis} onChange={(e) => setSynopsis(e.target.value)}></textarea>
             </div>
             <div className="col-12">
               <label htmlFor="bookImage" className="form-label">Imagem do livro</label>

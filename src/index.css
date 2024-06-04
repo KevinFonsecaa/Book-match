@@ -46,3 +46,7 @@
   min-height: 720px;
   max-height: 720px;
 }
+
+html,body{
+  height: 100%;
+}

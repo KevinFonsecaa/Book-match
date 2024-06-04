@@ -108,7 +108,8 @@ const SearchBooks = () => {
 
   return (
     <div className='container'>
-      <h2>Pesquisar Livros</h2>
+      <h2>Você está apenas alguns passos de encontrar</h2>
+      <h2>a leitura perfeita...</h2>
       <form className='row row-cols-lg-auto g-3 align-items-center justify-content-center'>
         <div className="col-12">
           <label>Autor:</label>
@@ -158,7 +159,7 @@ const SearchBooks = () => {
                       <p className='card-text'>Autor: {book.autor}</p>
                       <p className='card-text'>Gênero: {book.genero}</p>
                       <p className='card-text'>Descrição: {book.descricao}</p>
-                      <p className='card-text'>Qtd de página: {book.qtdPaginas}</p>
+                      <p className='card-text'>Qtd de páginas: {book.qtdPaginas}</p>
                       <div className='mb-3'>
                         <a href={`${book.pdfUrl}`} target='blank' download>Baixar</a>
                         <a href={`${book.link}`} className='text-decoration-none text-white' target='blank'><button type="button" className="btn btn-dark mx-3">
@@ -199,7 +200,7 @@ const SearchBooks = () => {
                 <p>Tem certeza de que deseja excluir o livro "{selectedBook.nomeLivros}"?</p>
               )}
               {deleteSuccess && (
-                <p>Livro exclui­do com sucesso!</p>
+                <p>Livro excluiÃÂ­do com sucesso!</p>
               )}
             </div>
             <div className="modal-footer">
